@@ -2,8 +2,11 @@ package com.JournalAppDemo.JournalApp.service;
 
 import com.JournalAppDemo.JournalApp.entity.JournalEntry;
 import com.JournalAppDemo.JournalApp.repository.JournalEntryRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 public class JournalEntryService {
@@ -15,4 +18,15 @@ public class JournalEntryService {
         journalEntryRepository.save(journalEntry);
     }
 
+    public List<JournalEntry> getAll(){
+        return journalEntryRepository.findAll();
+    }
+
+    public Optional<JournalEntry> findById(ObjectId id){
+        return journalEntryRepository.findById(id);
+    }
+
+    public void deleteById(ObjectId id){
+        journalEntryRepository.deleteById(id);
+    }
 }
