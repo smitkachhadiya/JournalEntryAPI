@@ -14,6 +14,7 @@ import java.util.List;
 
 @Document(collection = "user_data")
 @Data
+@NoArgsConstructor
 public class User {
 
     @Id
