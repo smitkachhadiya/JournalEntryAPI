@@ -17,17 +17,7 @@ import java.util.Optional;
 public class UserController {
 
     @Autowired
-    UserService userService;
-
-    @PostMapping
-    public ResponseEntity<?> addUser(@RequestBody User user){
-        try {
-            userService.saveEntry(user);
-            return new ResponseEntity<>(user , HttpStatus.CREATED);
-        } catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+    private UserService userService;
 
     @GetMapping
     public ResponseEntity<?> getAllUser(){
@@ -38,7 +28,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("user/{username}")
+    @GetMapping("{username}")
     public ResponseEntity<?> getUserByName(@PathVariable String username){
         User getUser = userService.findByUserName(username);
         if(getUser != null){
@@ -47,18 +37,25 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping
-    public ResponseEntity<?> updateUserById(@RequestBody User user){
-        User userInDb = userService.findByUserName(user.getUsername());
+    @PostMapping
+    public ResponseEntity<?> addUser(@RequestBody User user){
+        try {
+            userService.saveEntry(user);
+            return new ResponseEntity<>(user , HttpStatus.CREATED);
+        } catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(),  HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("{userName}")
+    public ResponseEntity<?> updateUserById(@RequestBody User user , @PathVariable String userName){
+        User userInDb = userService.findByUserName(userName);
         if(userInDb != null){
-            userInDb.setUsername(user.getUsername());
+            userInDb.setUserName(user.getUserName());
             userInDb.setPassword(user.getPassword());
             userService.saveEntry(userInDb);
             return new ResponseEntity<>(userInDb, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
-
-
 }

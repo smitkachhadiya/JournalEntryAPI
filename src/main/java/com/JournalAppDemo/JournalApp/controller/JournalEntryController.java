@@ -19,10 +19,8 @@ public class JournalEntryController {
 
     @Autowired
     private JournalEntryService journalEntryService;
-    @Autowired
-    private UserService userService;
 
-    @PostMapping("/user/{name}")
+    @PostMapping
     public ResponseEntity<?> createEntry(@RequestBody JournalEntry myEntry){
         try {
             myEntry.setDate(LocalDateTime.now());
