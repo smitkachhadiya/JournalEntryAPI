@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.beans.Transient;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -65,6 +68,7 @@ public class JournalEntryController {
         return new ResponseEntity<>("user not found",HttpStatus.NOT_FOUND);
     }
 
+    @Transactional
     @PutMapping("id/{username}/{myId}")
     public ResponseEntity<?> updateJournalById(@RequestBody JournalEntry newEntry,@PathVariable String username,@PathVariable ObjectId myId){
         JournalEntry old = journalEntryService.findById(myId).orElse(null);
