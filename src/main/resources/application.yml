@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: dev
+  data:
+    mongodb:
+      uri: mongodb+srv://skpatelsk344:skpatel344@cluster1.oco5t.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1
+      database: journaldb
+      auto-index-creation: true
