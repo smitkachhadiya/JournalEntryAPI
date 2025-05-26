@@ -4,6 +4,7 @@ import com.JournalAppDemo.JournalApp.entity.JournalEntry;
 import com.JournalAppDemo.JournalApp.entity.User;
 import com.JournalAppDemo.JournalApp.service.JournalEntryService;
 import com.JournalAppDemo.JournalApp.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/journal")
+@Slf4j
 public class JournalEntryController {
 
     @Autowired
@@ -34,6 +36,7 @@ public class JournalEntryController {
             journalEntryService.saveEntry(myEntry , username);
             return new ResponseEntity<>(myEntry , HttpStatus.CREATED);
         } catch (Exception e){
+            log.error("Error while creating entry : {}\n",myEntry.getTitle());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

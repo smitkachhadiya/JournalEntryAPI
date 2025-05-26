@@ -1,2 +1,9 @@
 server:
   port: 8080
+
+logging:
+  level:
+    com:
+      JournalAppDemo:
+        JournalApp: TRACE
+
