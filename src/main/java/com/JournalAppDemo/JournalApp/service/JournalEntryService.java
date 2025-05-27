@@ -3,6 +3,7 @@ package com.JournalAppDemo.JournalApp.service;
 import com.JournalAppDemo.JournalApp.entity.JournalEntry;
 import com.JournalAppDemo.JournalApp.entity.User;
 import com.JournalAppDemo.JournalApp.repository.JournalEntryRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+@Slf4j
 public class JournalEntryService {
 
     @Autowired
@@ -37,6 +39,7 @@ public class JournalEntryService {
             user.getJournalEntries().add(saved);
             userService.saveUser(user);
         } catch (Exception e){
+            log.error("Error : ",e);
             throw new RuntimeException("An Error occurred while saving the entry : " + e + "\n\n\n");
         }
     }
