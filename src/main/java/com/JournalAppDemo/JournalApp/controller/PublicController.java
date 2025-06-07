@@ -2,6 +2,7 @@ package com.JournalAppDemo.JournalApp.controller;
 
 import com.JournalAppDemo.JournalApp.entity.JournalEntry;
 import com.JournalAppDemo.JournalApp.entity.User;
+import com.JournalAppDemo.JournalApp.repository.UserRepositoryImpl;
 import com.JournalAppDemo.JournalApp.service.JournalEntryService;
 import com.JournalAppDemo.JournalApp.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,9 @@ public class PublicController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserRepositoryImpl userRepositoryImpl;
+
 //    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @PostMapping("/create-user")
@@ -40,6 +44,15 @@ public class PublicController {
     @GetMapping("/allusers")
     public ResponseEntity<?> getAllUser(){
         List<User> all = userService.getAll();
+        if(!all.isEmpty()){
+            return new ResponseEntity<>(all, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/weeklyUpdate")
+    public ResponseEntity<?> getAllWeeklyUpdateUSers(){
+        List<User> all = userRepositoryImpl.getUserForWU();
         if(!all.isEmpty()){
             return new ResponseEntity<>(all, HttpStatus.OK);
         }
