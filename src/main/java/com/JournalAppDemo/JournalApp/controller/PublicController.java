@@ -51,7 +51,7 @@ public class PublicController {
     }
 
     @GetMapping("/weeklyUpdate")
-    public ResponseEntity<?> getAllWeeklyUpdateUSers(){
+    public ResponseEntity<?> getAllWeeklyUpdateUsers(){
         List<User> all = userRepositoryImpl.getUserForWU();
         if(!all.isEmpty()){
             return new ResponseEntity<>(all, HttpStatus.OK);

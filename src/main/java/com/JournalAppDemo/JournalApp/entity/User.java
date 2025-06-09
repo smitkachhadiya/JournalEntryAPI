@@ -1,10 +1,7 @@
 package com.JournalAppDemo.JournalApp.entity;
 
 import lombok.*;
-import net.bytebuddy.implementation.bind.annotation.Default;
 import org.bson.types.ObjectId;
-import org.hibernate.type.TrueFalseType;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
