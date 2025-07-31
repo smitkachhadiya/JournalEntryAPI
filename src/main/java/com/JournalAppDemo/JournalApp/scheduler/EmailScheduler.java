@@ -35,7 +35,10 @@ public class EmailScheduler {
             List<User> users = userRepositoryImpl.getUserForWU();
             for (User user : users){
                 List<JournalEntry> journalEntries = user.getJournalEntries();
-                List<String> filteredEntries = journalEntries.stream().filter(x -> x.getDate().isAfter(LocalDateTime.now().minus(7, ChronoUnit.DAYS))).map(x -> x.getDate().toLocalDate()+"\n"+x.getTitle()+" : "+x.getContent()+"\n").collect(Collectors.toList());
+                List<String> filteredEntries = journalEntries.stream()
+                        .filter(x -> x.getDate().isAfter(LocalDateTime.now().minus(7, ChronoUnit.DAYS)))
+                        .map(x -> x.getDate().toLocalDate()+"\n"+x.getTitle()+" : "+x.getContent()+"\n")
+                        .collect(Collectors.toList());
                 String body = String.join("\n", filteredEntries);
                 emailService.sendEmail(user.getEmail(),"Your Journal Entries for last 7 days",body);
             }
