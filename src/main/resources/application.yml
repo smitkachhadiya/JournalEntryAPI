@@ -3,6 +3,6 @@ spring:
     active: dev
   data:
     mongodb:
-      uri: mongodb+srv://skpatelsk344:skpatel344@cluster1.oco5t.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1
+      uri: mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_CLUSTER_HOST}/?retryWrites=true&w=majority&appName=${MONGO_APP_NAME}
       database: journaldb
       auto-index-creation: true
