@@ -40,11 +40,13 @@ public class EmailScheduler {
                         .map(x -> x.getDate().toLocalDate()+"\n"+x.getTitle()+" : "+x.getContent()+"\n")
                         .collect(Collectors.toList());
                 String body = String.join("\n", filteredEntries);
-                emailService.sendEmail(user.getEmail(),"Your Journal Entries for last 7 days",body);
+                if(!body.isEmpty()){
+                    emailService.sendEmail(user.getEmail(),"Your Journal Entries for last 7 days",body);
+                    log.info("Mail Send...");
+                }
             }
-            log.info("Mail Send...");
         } catch (Exception e){
-            log.error("Error : ",e);
+            log.error("Error While Sending Mail: ",e);
         }
 
     }
