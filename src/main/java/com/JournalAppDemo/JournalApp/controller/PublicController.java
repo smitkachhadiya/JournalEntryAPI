@@ -9,6 +9,10 @@ import com.JournalAppDemo.JournalApp.service.UserDetailServiceImplementation;
 import com.JournalAppDemo.JournalApp.service.UserService;
 import com.JournalAppDemo.JournalApp.utilis.JwtUtil;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/public")
 @Slf4j
+@Tag(name = "Public APIs")
 public class PublicController {
 
     @Autowired
@@ -45,6 +50,15 @@ public class PublicController {
 
 //    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
+    @Operation(
+            summary = "User Registration",
+            description = "Registers a new user and saves their credentials. On successful registration, returns the user details.",
+            responses = {
+                    @ApiResponse(responseCode = "201", description = "User registered successfully.",
+                            content = @Content(schema = @Schema(implementation = UserDTO.class))),
+                    @ApiResponse(responseCode = "400", description = "Invalid user data provided.", content = @Content)
+            }
+    )
     @PostMapping("/signin")
     public ResponseEntity<?> signin(@RequestBody UserDTO user){
         try {
@@ -62,8 +76,16 @@ public class PublicController {
         }
     }
 
+    @Operation(
+            summary = "User Login",
+            description = "Authenticates the user and returns a JWT token upon successful login.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Login successful. JWT token returned."),
+                    @ApiResponse(responseCode = "400", description = "Invalid username or password.", content = @Content)
+            }
+    )
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user) {
+    public ResponseEntity<String> login(@RequestBody UserDTO user) {
         try{
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
@@ -76,6 +98,15 @@ public class PublicController {
         }
     }
 
+    @Operation(
+            summary = "Get Users with Weekly Updates Enabled",
+            description = "Fetches a list of all users who have opted in for weekly updates.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "List of users with weekly updates enabled.",
+                            content = @Content(schema = @Schema(implementation = User.class))),
+                    @ApiResponse(responseCode = "404", description = "No users found.", content = @Content)
+            }
+    )
     @GetMapping("/weeklyUpdate")
     public ResponseEntity<?> getAllWeeklyUpdateUsers(){
         List<User> all = userRepositoryImpl.getUserForWU();
@@ -85,6 +116,15 @@ public class PublicController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @Operation(
+            summary = "Get All Users",
+            description = "Retrieves a list of all registered users in the system.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "List of all users retrieved successfully.",
+                            content = @Content(schema = @Schema(implementation = User.class))),
+                    @ApiResponse(responseCode = "404", description = "No users found in the database.", content = @Content)
+            }
+    )
     @GetMapping("/allusers")
     public ResponseEntity<?> getAllUser(){
         List<User> all = userService.getAll();
@@ -94,6 +134,15 @@ public class PublicController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @Operation(
+            summary = "Find User by Username",
+            description = "Fetches user details by the given username.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "User details found.",
+                            content = @Content(schema = @Schema(implementation = User.class))),
+                    @ApiResponse(responseCode = "404", description = "User not found.", content = @Content)
+            }
+    )
     @GetMapping("/find/{username}")
     public ResponseEntity<?> getUserByName(@PathVariable String username){
         User getUser = userService.findByUserName(username);
@@ -103,8 +152,16 @@ public class PublicController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @Operation(
+            summary = "Get All Journal Entries",
+            description = "Fetches all journal entries created by users.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "List of journal entries retrieved.",
+                            content = @Content(schema = @Schema(implementation = JournalEntry.class))),
+                    @ApiResponse(responseCode = "404", description = "No journal entries found.", content = @Content)
+            }
+    )
     @GetMapping("/allentries")
-    @Operation(summary = "Get all journal entries of a user")
     public ResponseEntity<?> getAll(){
         List<JournalEntry> all =  journalEntryService.getAll();
         if(!all.isEmpty()){
