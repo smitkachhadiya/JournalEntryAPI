@@ -1,5 +1,6 @@
 package com.JournalAppDemo.JournalApp.controller;
 
+import com.JournalAppDemo.JournalApp.dto.UserDTO;
 import com.JournalAppDemo.JournalApp.entity.JournalEntry;
 import com.JournalAppDemo.JournalApp.entity.User;
 import com.JournalAppDemo.JournalApp.repository.UserRepositoryImpl;
@@ -7,6 +8,7 @@ import com.JournalAppDemo.JournalApp.service.JournalEntryService;
 import com.JournalAppDemo.JournalApp.service.UserDetailServiceImplementation;
 import com.JournalAppDemo.JournalApp.service.UserService;
 import com.JournalAppDemo.JournalApp.utilis.JwtUtil;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,9 +46,14 @@ public class PublicController {
 //    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @PostMapping("/signin")
-    public ResponseEntity<?> signin(@RequestBody User user){
+    public ResponseEntity<?> signin(@RequestBody UserDTO user){
         try {
-            userService.saveNewUser(user);
+            User newUser = new User();
+            newUser.setEmail(user.getEmail());
+            newUser.setUserName(user.getUserName());
+            newUser.setPassword(user.getPassword());
+            newUser.setWeeklyUpdate(user.isWeeklyUpdate());
+            userService.saveNewUser(newUser);
             return new ResponseEntity<>(user , HttpStatus.CREATED);
         } catch (Exception e){
 //            logger.error("Error Occurred while creating user : {} ",user.getUserName());
@@ -97,6 +104,7 @@ public class PublicController {
     }
 
     @GetMapping("/allentries")
+    @Operation(summary = "Get all journal entries of a user")
     public ResponseEntity<?> getAll(){
         List<JournalEntry> all =  journalEntryService.getAll();
         if(!all.isEmpty()){
