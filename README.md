@@ -8,21 +8,6 @@
 
 ---
 
-## 📑 Table of Contents
-- [📖 Overview]
-- [🎯 Objectives]
-- [📌 Scope]
-- [🛠 Tech Stack]
-- [⚙️ Requirements]
-- [📂 Project Structure]
-- [🔍 Features]
-- [🧪 Testing]
-- [✅ Advantages]
-- [🚀 Future Improvements]
-- [📜 References]
-
----
-
 ## 📖 Overview
 The **Journal App Backend** is a secure digital platform that enables users to create, manage, and maintain personal journal entries.  
 It provides **RESTful APIs** for:
@@ -34,90 +19,141 @@ This backend ensures **data security, scalability, and maintainability** for per
 
 ---
 
-## 🎯 Objectives
-- Develop a secure, scalable backend for journal management
-- Provide full CRUD operations for journal entries
-- Implement **JWT authentication** for secure access
-- Send **weekly email summaries** to users
-- Provide **admin APIs** for managing users and roles
-
----
-
-## 📌 Scope
-- REST API for:
-  - User registration, login, profile management
-  - Journal entry management (Create, Read, Update, Delete)
-- JWT-based authentication and role-based authorization
-- Public APIs for weekly updates
-- Modular architecture for scalability
-- Optional email notification integration
-
----
-
-## 🛠 Tech Stack
-**Language:** Java  
-**Framework:** Spring Boot (2.7.15)  
-**Database:** MongoDB  
-**Authentication:** JWT (Java JWT 0.12.5)  
-**API Documentation:** Swagger (OpenAPI)  
-**Logging:** SLF4J with Logback  
-**Build Tool:** Maven / Gradle  
-**Version Control:** Git  
-**Testing Tools:** Postman, SonarCloud  
-**Optional Services:** SMTP (email service)  
-**IDE:** IntelliJ IDEA  
-
----
-
-## ⚙️ Requirements
-
-**Functional:**
-- User registration & login with JWT authentication
-- Profile management (update, delete)
-- Journal CRUD operations with ownership validation
-- Admin APIs for user management
-- Weekly email updates for users
-- Secure API access with role-based controls
-
-**Non-Functional:**
-- Response time < 500ms for most API calls
-- HTTPS-secured transactions
-- Clear API documentation via Swagger
-- Logging of key events & monitoring system health
-
----
-
 ## 📂 Project Structure
 
 JournalApp/
 
-├── config/ # Security & application configurations
+├── config/            # Security & application configurations
 
-├── controller/ # REST API controllers
+├── controller/        # REST API controllers
 
-├── model/ # Entity models
+├── model/             # Entity models
 
-├── repository/ # MongoDB repositories
+├── repository/        # MongoDB repositories
 
-├── service/ # Business logic services
+├── service/           # Business logic services
 
-├── dto/ # Data transfer objects
+├── dto/               # Data transfer objects
 
-├── utils/ # Utility classes
+├── utils/             # Utility/helper classes
 
-└── resources/ # application.properties, static files
+└── resources/         # application.properties and static files
 
 
 ---
 
-## 🔍 Features
-- **Authentication & Authorization:** JWT-based security with role control
-- **User Profile Management:** View, update, delete profile data
-- **Journal Entry Management:** Secure CRUD for personal entries
-- **Admin Panel APIs:** Manage users, roles
-- **Email Service:** Weekly summaries via SMTP
-- **Public APIs:** Retrieve registered users
-- **API Documentation:** Swagger UI for interactive API testing
+## ✨ Features 🌟
+- **JWT Authentication & Authorization** – Secure login and role-based access control  
+- **User Management** – Register, update profile, delete account  
+- **Journal Entry Management** – Create, read, update, and delete journal entries  
+- **Admin Features** – Manage users and their roles  
+- **Weekly Email Updates** – Automated summaries for users  
+- **API Documentation** – Swagger UI integration  
+- **Code Quality** – Static analysis with SonarCloud  
+
+---
+
+## 🛠 Tech Stack 💻
+- **Language:** Java  
+- **Framework:** Spring Boot (2.7.15)  
+- **Database:** MongoDB  
+- **Authentication:** JWT  
+- **API Documentation:** Swagger (Springdoc OpenAPI)  
+- **Logging:** SLF4J with Logback  
+- **Testing Tools:** Postman, SonarCloud
+- **Email Service:** SMTP
+- **Build Tool:** Maven / Gradle  
+
+---
+
+## 🚀 How to Start Your Project ▶️
+
+1. **Clone the repository**  
+```bash
+git clone https://github.com/your-username/JournalEntryAPI.git
+cd JournalEntryAPI
+```
+
+2. **Configure Environment Variables**  
+Create a `.env` file in the root directory with the following keys:
+
+```env
+MAIL_USERNAME=your_email@example.com
+MAIL_PASSWORD=your_email_password
+MONGO_USERNAME=your_mongo_username
+MONGO_PASSWORD=your_mongo_password
+MONGO_CLUSTER_HOST=your_mongo_cluster_host
+MONGO_APP_NAME=Cluster1
+```
+
+> Note: These values will be injected into your Spring Boot application via environment variables.
+
+3. **Update `application.yml` or `application-dev.yml`**  
+Configure your MongoDB and mail settings using the environment variables:
+
+```yaml
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_CLUSTER_HOST}/${MONGO_APP_NAME}?retryWrites=true&w=majority
+  mail:
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    host: smtp.gmail.com
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+```
+
+4. **Build & Run the project**  
+```bash
+mvn clean install
+mvn spring-boot:run
+```
+
+5. **Access API documentation**  
+Swagger UI : http://localhost:8080/swagger-ui/index.html
+
+---
+
+## 👥 User Roles 🧑‍🤝‍🧑
+
+### 1. User
+- Register and log in  
+- Create, update, and delete personal journal entries  
+- View and manage profile  
+- Receive weekly email updates  
+
+### 2. Admin
+- All user permissions  
+- View all journal entries  
+- Manage user accounts and roles  
+
+---
+
+## 🔑 Environment Variables 🔒
+
+You must set the following in a `.env` file before running the project:
+
+```env
+MAIL_USERNAME=your_email@example.com
+MAIL_PASSWORD=your_email_password
+MONGO_USERNAME=your_mongo_username
+MONGO_PASSWORD=your_mongo_password
+MONGO_CLUSTER_HOST=your_mongo_cluster_host
+MONGO_APP_NAME=Cluster1
+```
+
+- `MAIL_USERNAME` → Your email for sending updates  
+- `MAIL_PASSWORD` → Email password or App Password (for Gmail)  
+- `MONGO_USERNAME` → MongoDB Atlas username  
+- `MONGO_PASSWORD` → MongoDB Atlas password  
+- `MONGO_CLUSTER_HOST` → MongoDB cluster host URL (without protocol)  
+- `MONGO_APP_NAME` → Name of your MongoDB database/cluster
 
 ---
 
@@ -131,27 +167,8 @@ JournalApp/
 **API Testing – Postman**  
 - Positive and negative test scenarios  
 - JWT authentication flows validated  
-- Comprehensive Postman Collection covering all endpoints  
-
----
-
-## ✅ Advantages
-- **Security:** JWT authentication & HTTPS
-- **Scalability:** Modular Spring Boot architecture
-- **Transparency:** Swagger API documentation
-- **Maintainability:** Code quality ensured with SonarCloud
-- **User Experience:** Weekly update functionality
-
----
-
-## 🚀 Future Improvements
-- Advanced admin analytics dashboard
-- Two-factor authentication
-- Multi-language support
-- Real-time notifications (WebSocket)
-- Role-based granular permissions
-- Integration with cloud email APIs (SendGrid, AWS SES)
-
+- Comprehensive Postman Collection covering all endpoints
+  
 ---
 
 ## 📜 References
