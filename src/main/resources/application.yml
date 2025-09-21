@@ -6,3 +6,14 @@ spring:
       uri: mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_CLUSTER_HOST}/?retryWrites=true&w=majority&appName=${MONGO_APP_NAME}
       database: journaldb
       auto-index-creation: true
+
+info:
+  app:
+    name: "Journal App – Backend API"
+    description: "The Journal App Backend is a secure digital platform that enables users to create, manage, and maintain personal journal entries."
+    version: 1.0.0
+
+management:
+  info:
+    env:
+      enabled: true
